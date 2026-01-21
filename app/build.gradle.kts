@@ -25,7 +25,7 @@ android {
             resValue("string","app_name","MobileGL Renderer")
             //包名后缀
             //package name Suffix
-            applicationIdSuffix = ".test.01.21"
+            applicationIdSuffix = ".test"
 
             //渲染器在启动器内显示的名称
             //The name displayed by the renderer in the launcher

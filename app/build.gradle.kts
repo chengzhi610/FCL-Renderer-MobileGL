@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.mio.plugin.renderer"
+    namespace = "com.mio.MobileGL.debug.renderer"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.mio.plugin.renderer"
+        applicationId = "com.mio.MobileGL.debug.renderer"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -22,17 +22,17 @@ android {
         configureEach {
             //应用名
             //app name
-            resValue("string","app_name","XXX Renderer")
+            resValue("string","app_name","MobileGL Renderer")
             //包名后缀
             //package name Suffix
-            applicationIdSuffix = ".xxx"
+            applicationIdSuffix = ".test.01.21"
 
             //渲染器在启动器内显示的名称
             //The name displayed by the renderer in the launcher
-            manifestPlaceholders["des"] = ""
+            manifestPlaceholders["des"] = "MobileGL"
             //渲染器的具体定义 格式为 名称:渲染器库名:EGL库名 例如 LTW:libltw.so:libltw.so
             //The specific definition format of a renderer is ${name}:${renderer library name}:${EGL library name}, for example:   LTW:libltw.so:libltw.so
-            manifestPlaceholders["renderer"] = ""
+            manifestPlaceholders["renderer"] = "MobileGL:libMobileGL.so:libMobileGL.so"
 
             //特殊Env
             //Special Env
@@ -41,7 +41,7 @@ android {
             //如果有多个库,可以使用","隔开,例如  DLOPEN=libxxx.so,libyyy.so
             //If there are multiple libraries, you can use "," to separate them, for example  DLOPEN=libxxx.so,libyyy.so
             manifestPlaceholders["boatEnv"] = mutableMapOf<String,String>().apply {
-
+            put("DLOPEN", "libglslang.so.15.4.0,libglslang.so.15,libglslang.so")
             }.run {
                 var env = ""
                 forEach { (key, value) ->
@@ -51,7 +51,7 @@ android {
             }
 
             manifestPlaceholders["pojavEnv"] = mutableMapOf<String,String>().apply {
-
+            put("DLOPEN", "libglslang.so.15.4.0,libglslang.so.15,libglslang.so")
             }.run {
                 var env = ""
                 forEach { (key, value) ->

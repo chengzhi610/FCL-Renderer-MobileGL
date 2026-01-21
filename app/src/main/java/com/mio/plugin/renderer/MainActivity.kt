@@ -1,4 +1,4 @@
-package com.mio.plugin.renderer
+package com.mio.MobileGL.debug.renderer
 
 import android.app.Activity
 import android.os.Bundle

@@ -1,0 +1,54 @@
+name: 构建 MobileGL 渲染器 APK
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      with:
+        lfs: true  # 重要：启用 Git LFS 支持
+    
+    - name: 设置 JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    
+    - name: 设置 Android SDK
+      uses: android-actions/setup-android@v3
+    
+    - name: 接受 Android SDK 许可证
+      run: |
+        yes | sdkmanager --licenses
+    
+    - name: 安装必要的 Android SDK 组件
+      run: |
+        sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+    
+    - name: 授予 Gradle 执行权限
+      run: chmod +x gradlew
+    
+    - name: 构建 Debug APK
+      run: ./gradlew assembleDebug
+    
+    - name: 构建 Release APK
+      run: ./gradlew assembleRelease
+    
+    - name: 上传 APK 产物
+      uses: actions/upload-artifact@v4
+      with:
+        name: MobileGL-Renderer-APKs
+        path: |
+          app/build/outputs/apk/debug/*.apk
+          app/build/outputs/apk/release/*.apk
+        retention-days: 7
+
